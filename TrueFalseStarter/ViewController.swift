@@ -22,7 +22,8 @@ class ViewController: UIViewController {
     var gameSound: SystemSoundID = 0
     var gameCorrectSound: SystemSoundID = 0
     var gameFailSound: SystemSoundID = 0
-    
+    var gameCompletedSound: SystemSoundID = 0
+
     let questionProvider = QuestionProvider()
 
     @IBOutlet weak var resultLabel: UILabel!
@@ -86,6 +87,7 @@ class ViewController: UIViewController {
     }
     
     func displayScore() {
+        playGameCompletedSound()
         // Hide the answer buttons
         option1Button.isHidden = true
         option2Button.isHidden = true
@@ -189,8 +191,19 @@ class ViewController: UIViewController {
         let pathToSoundFile3 = Bundle.main.path(forResource: "wrong", ofType: "wav")
         let soundURL3 = URL(fileURLWithPath: pathToSoundFile3!)
         AudioServicesCreateSystemSoundID(soundURL3 as CFURL, &gameFailSound)
+        
+        
+        let pathToSoundFile4 = Bundle.main.path(forResource: "completed", ofType: "wav")
+        let soundURL4 = URL(fileURLWithPath: pathToSoundFile4!)
+        AudioServicesCreateSystemSoundID(soundURL4 as CFURL, &gameCompletedSound)
+        
+        
+        
+        
     }
-    
+    func playGameCompletedSound() {
+        AudioServicesPlaySystemSound(gameCompletedSound)
+    }
     func playGameStartSound() {
         AudioServicesPlaySystemSound(gameSound)
     }
